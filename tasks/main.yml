@@ -1,4 +1,11 @@
 ---
-- name: "Mock task"
-  ansible.builtin.debug:
-    msg: "hello, world!"
+# tasks file for playbooks/roles/mount_device
+
+- name: "Mount devices"
+  with_items: "{{ devices }}"
+  ansible.posix.mount:
+    fstype: "{{ item.fstype }}"
+    path: "{{ item.where }}"
+    src: "{{ item.what }}"
+    opts: "{{ item.opts | join(',') }}"
+    state: "{{ item.state }}"

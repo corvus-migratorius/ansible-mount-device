@@ -2,4 +2,12 @@
 - name: Converge
   hosts: all
   roles:
-    - role: genlab.template
+    - role: genlab.mount_device
+      devices:
+        - what: "/dev/sda"
+          where: "/storage"
+          fstype: ext4
+          opts:
+            - noatime
+          state: mounted
+

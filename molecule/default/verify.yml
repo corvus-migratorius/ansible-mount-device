@@ -5,7 +5,10 @@
   any_errors_fatal: true
 
   tasks:
-    - name: "Mock verification task"
-      changed_when: false
+    - name: "Check mountpoint"
       ansible.builtin.command:
-        cmd: "true"
+        cmd: lsblk
+      register: cmd1
+
+    - debug:
+        var: cmd1
