@@ -10,4 +10,3 @@
           opts:
             - noatime
           state: mounted
-         

@@ -9,6 +9,7 @@
       ansible.builtin.command:
         cmd: lsblk
       register: cmd1
+      failed_when: cmd1.rc != 0
 
     - name: "Explore stdout"
       ansible.builtin.debug:
