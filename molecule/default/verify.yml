@@ -15,5 +15,3 @@
       ansible.builtin.assert:
         that:
            "'/tmp/test_file on /test_mount type ext3' in mountl.stdout"
-
-
