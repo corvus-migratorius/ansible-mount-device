@@ -7,10 +7,13 @@
   tasks:
     - name: "Check mountpoint"
       ansible.builtin.command:
-        cmd: lsblk
-      register: cmd1
-      failed_when: cmd1.rc != 0
+        cmd: mount -l
+      register: mountl
+      failed_when: mountl.rc != 0
 
-    - name: "Explore stdout"
-      ansible.builtin.debug:
-        var: cmd1.stdout_lines | select('search', '/storage') | list
+    - name: "Ensure test_file is mounted on test_mount"
+      ansible.builtin.assert:
+        that:
+           "'/tmp/test_file on /test_mount type ext3' in mountl.stdout"
+
+
