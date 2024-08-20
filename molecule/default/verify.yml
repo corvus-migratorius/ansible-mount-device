@@ -11,4 +11,4 @@
       register: cmd1
 
     - debug:
-        var: cmd1
+        var: cmd1.stdout_lines | select('search', '/storage') | list
