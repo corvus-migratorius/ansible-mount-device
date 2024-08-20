@@ -10,5 +10,6 @@
         cmd: lsblk
       register: cmd1
 
-    - debug:
+    - name: "Explore stdout"
+      ansible.builtin.debug:
         var: cmd1.stdout_lines | select('search', '/storage') | list
