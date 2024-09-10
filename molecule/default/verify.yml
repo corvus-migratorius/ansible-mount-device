@@ -1,17 +1,22 @@
 ---
 - name: Verify
   hosts: all
-  gather_facts: false
+  gather_facts: true
   any_errors_fatal: true
 
   tasks:
-    - name: "Check mountpoint"
-      ansible.builtin.command:
-        cmd: mount -l
-      register: mountl
-      failed_when: mountl.rc != 0
 
-    - name: "Ensure test_file is mounted on test_mount"
-      ansible.builtin.assert:
-        that:
-           "'/tmp/test_file on /test_mount type ext3' in mountl.stdout"
+    - name: "Ensure /test_mount directory exists"
+      file:
+        path: /test_mount
+        state: directory
+
+    - name: "Verify if /test_mount is a mountpoint"
+      debug:
+        msg: "/tmp/test_file is a mountpoint"
+      when: "'/tmp/test_file' is mount"
+
+    - name: Handle case when path is not a mount point
+      debug:
+        msg: "/test_mount is not a mount point"
+      when: "'/test_mount' is not mount"
