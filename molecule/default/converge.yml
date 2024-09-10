@@ -10,10 +10,11 @@
       register: disk_file
 
     - name: "Create a file to act as a disk if it doesn't exist"
+      when: not disk_file.stat.exists
+      changed_when: false
       ansible.builtin.shell: |
         dd if=/dev/zero of=/tmp/test_file bs=1000000 count=100
         mkfs.ext3 /tmp/test_file
-      when: not disk_file.stat.exists
 
   roles:
     - role: genlab.mount_device
