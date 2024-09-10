@@ -5,7 +5,15 @@
   any_errors_fatal: true
 
   tasks:
-    - name: "Mock verification task"
+    - name: "Check mountpoint"
       changed_when: false
       ansible.builtin.command:
-        cmd: "true"
+        cmd: mount -l
+      register: mountl
+
+    - name: "Ensure test_file is mounted on test_mount"
+      ansible.builtin.assert:
+        that:
+          "'/tmp/test_file on /test_mount type ext3' in mountl.stdout"
+        success_msg: "/test_mount is a mountpoint"
+        fail_msg: "/test_mount is not a mountpoint"
