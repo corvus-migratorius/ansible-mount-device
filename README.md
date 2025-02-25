@@ -1,7 +1,9 @@
 ansible-mount-device
 =========
 
-Mount the given block device
+Mount the given block device.
+
+This is essentially a thin wrapper about `ansible.posix.mount` created to standardize handling mounts.
 
 Requirements
 ------------
