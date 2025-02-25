@@ -1,5 +1,5 @@
 ---
-name: ansible-role-template-ci
+name: ansible-mount-device
 channels:
   - conda-forge
 dependencies:
